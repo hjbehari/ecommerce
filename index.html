@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEVADA // Disruptive Streetwear</title>
+    <!-- Google Fonts for High-End Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -20,6 +21,7 @@
             --neon-accent: #d4ff00; /* Editorial lime accent from the promo grids */
             --font-display: 'Syncopate', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * {
@@ -39,7 +41,7 @@
         a {
             text-decoration: none;
             color: inherit;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
         }
 
         ul {
@@ -72,12 +74,31 @@
             background: transparent;
             color: var(--text-light);
             cursor: pointer;
-            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        /* Slide fill button effect */
+        .btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--text-light);
+            z-index: -1;
+            transition: var(--transition-smooth);
         }
 
         .btn:hover {
-            background: var(--text-light);
             color: var(--text-dark);
+        }
+
+        .btn:hover::after {
+            height: 100%;
         }
 
         .btn-dark {
@@ -85,24 +106,44 @@
             color: var(--text-dark);
         }
 
-        .btn-dark:hover {
+        .btn-dark::after {
             background: var(--text-dark);
+        }
+
+        .btn-dark:hover {
             color: var(--text-light);
         }
 
-        /* --- TICKER ANNOUNCEMENT --- */
+        /* --- ANIMATED MARQUEE TICKER --- */
         .announcement-bar {
             background: var(--bg-primary);
             border-bottom: 1px solid #222;
-            padding: 10px 0;
+            padding: 12px 0;
             font-size: 0.75rem;
             font-weight: 500;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
         }
 
-        /* --- NAVIGATION --- */
+        .marquee-track {
+            display: flex;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-text {
+            padding-right: 4rem;
+            flex-shrink: 0;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        /* --- NAVIGATION INTERACTIONS --- */
         header {
             position: sticky;
             top: 0;
@@ -128,8 +169,24 @@
             letter-spacing: 0.05em;
         }
 
-        .nav-links a:hover {
-            color: var(--text-muted);
+        .nav-links a {
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-light);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .logo {
@@ -137,6 +194,11 @@
             font-size: 1.6rem;
             letter-spacing: -0.05em;
             font-weight: 700;
+            transition: var(--transition-smooth);
+        }
+
+        .logo:hover {
+            letter-spacing: 0.05em;
         }
 
         .nav-meta {
@@ -145,7 +207,12 @@
             font-size: 0.9rem;
         }
 
-        /* --- HERO SECTION (GAZU + NEVERMIND VIBE) --- */
+        .nav-meta a:hover {
+            color: var(--text-muted);
+            transform: translateY(-1px);
+        }
+
+        /* --- HERO INTRO ANIMATIONS (GAZU VIBE) --- */
         .hero {
             position: relative;
             height: calc(100vh - 115px);
@@ -156,7 +223,6 @@
             overflow: hidden;
         }
 
-        /* Oversized structural background typography from GAZU */
         .hero-bg-text {
             position: absolute;
             left: 50%;
@@ -169,6 +235,7 @@
             white-space: nowrap;
             user-select: none;
             z-index: 1;
+            animation: trackingIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         .hero-image-wrapper {
@@ -178,12 +245,18 @@
             width: 40vw;
             height: 90%;
             z-index: 2;
+            opacity: 0;
+            transform: translateY(40px) scale(1.05);
+            animation: heroReveal 1.2s 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         .hero-content {
             position: relative;
             z-index: 3;
             max-width: 600px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         .hero-tagline {
@@ -202,7 +275,18 @@
             margin-bottom: 30px;
         }
 
-        /* --- CATEGORIES TRI-GRID --- */
+        @keyframes trackingIn {
+            0% { letter-spacing: -0.2em; opacity: 0; }
+            100% { letter-spacing: -0.05em; opacity: 1; }
+        }
+        @keyframes heroReveal {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CATEGORIES HOVER EFFECTS --- */
         .categories-section {
             padding: 100px 0;
             background: var(--bg-secondary);
@@ -210,7 +294,7 @@
 
         .grid-tri {
             display: grid;
-            grid-template-columns: repeat(3, 100fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
@@ -219,24 +303,26 @@
             height: 500px;
             overflow: hidden;
             background: #222;
+            cursor: pointer;
         }
 
         .category-card img {
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .category-card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .category-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             padding: 30px;
+            transition: var(--transition-smooth);
         }
 
         .category-title {
@@ -250,6 +336,8 @@
             font-size: 0.85rem;
             color: var(--text-muted);
             margin-bottom: 15px;
+            transform: translateY(0);
+            transition: var(--transition-smooth);
         }
 
         .category-link {
@@ -262,7 +350,15 @@
             gap: 8px;
         }
 
-        /* --- EDITORIAL PROMO GRID (50/40/30 VIBE) --- */
+        .category-link span {
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-link span {
+            transform: translateX(6px);
+        }
+
+        /* --- EDITORIAL PROMO INTERACTION --- */
         .promo-section {
             padding: 60px 0;
         }
@@ -295,6 +391,11 @@
             color: var(--neon-accent);
             line-height: 1;
             margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .promo-banner:hover .promo-badge {
+            transform: scale(1.05) rotate(-1deg);
         }
 
         .promo-heading {
@@ -311,9 +412,14 @@
             top: 0;
             width: 55%;
             height: 100%;
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* --- CURATED PRODUCTS (NEVERMIND STYLING) --- */
+        .promo-banner:hover .promo-bg-img {
+            transform: scale(1.03);
+        }
+
+        /* --- PRODUCT CATALOG CARDS (NEVERMIND STYLING) --- */
         .products-section {
             padding: 100px 0;
             background: var(--bg-primary);
@@ -339,7 +445,7 @@
         }
 
         .product-card {
-            group: true;
+            cursor: pointer;
         }
 
         .product-image-box {
@@ -348,6 +454,23 @@
             background: #181818;
             margin-bottom: 16px;
             overflow: hidden;
+            border: 1px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .product-image-box img {
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Border frame reveal and lift effect */
+        .product-card:hover .product-image-box {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .product-card:hover .product-image-box img {
+            transform: scale(1.04);
         }
 
         .product-tag {
@@ -368,6 +491,11 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            transition: var(--transition-smooth);
+        }
+
+        .product-card:hover .product-card-meta {
+            transform: translateY(-2px);
         }
 
         .product-type {
@@ -395,7 +523,7 @@
             margin-right: 6px;
         }
 
-        /* --- SPLIT BRAND MISSION (GAZU LIGHT ARCHITECTURE) --- */
+        /* --- SPLIT BRAND MISSION BRANDING --- */
         .mission-section {
             background: var(--bg-accent);
             color: var(--text-dark);
@@ -459,10 +587,6 @@
             letter-spacing: 0.1em;
         }
 
-        .footer-links display: flex;
-        .footer-links flex-direction: column;
-        .footer-links gap: 12px;
-
         .footer-links a {
             display: block;
             margin-bottom: 12px;
@@ -470,6 +594,7 @@
 
         .footer-links a:hover {
             color: var(--text-light);
+            transform: translateX(4px);
         }
 
         .footer-bottom {
@@ -497,10 +622,17 @@
 </head>
 <body>
 
+    <!-- Infinite Marquee Ticker Banner -->
     <div class="announcement-bar">
-        FREE SHIPPING ON GLOBAL ORDERS OVER $150 • DROP 04 LIVE NOW
+        <div class="marquee-track">
+            <span class="marquee-text">FREE SHIPPING ON GLOBAL ORDERS OVER $150 • DROP 04 LIVE NOW</span>
+            <span class="marquee-text">FREE SHIPPING ON GLOBAL ORDERS OVER $150 • DROP 04 LIVE NOW</span>
+            <span class="marquee-text">FREE SHIPPING ON GLOBAL ORDERS OVER $150 • DROP 04 LIVE NOW</span>
+            <span class="marquee-text">FREE SHIPPING ON GLOBAL ORDERS OVER $150 • DROP 04 LIVE NOW</span>
+        </div>
     </div>
 
+    <!-- Navigation Header -->
     <header>
         <div class="container nav-container">
             <ul class="nav-links">
@@ -519,6 +651,7 @@
         </div>
     </header>
 
+    <!-- Hero Showcase Section (GAZU Style Layout + Reveal Animations) -->
     <section class="hero">
         <div class="hero-bg-text">NVD</div>
         <div class="hero-image-wrapper">
@@ -533,6 +666,7 @@
         </div>
     </section>
 
+    <!-- Identity Categories Tri-Grid (Hover Scale Zoom) -->
     <section class="categories-section">
         <div class="container">
             <div class="grid-tri">
@@ -541,7 +675,7 @@
                     <div class="category-overlay">
                         <h3 class="category-title">MENS</h3>
                         <p class="category-subtitle">Elevated Everyday Essentials</p>
-                        <a href="#" class="category-link">Shop Collection →</a>
+                        <a href="#" class="category-link">Shop Collection <span>→</span></a>
                     </div>
                 </div>
                 <div class="category-card">
@@ -549,7 +683,7 @@
                     <div class="category-overlay">
                         <h3 class="category-title">WOMENS</h3>
                         <p class="category-subtitle">Effortless Shapes & Silhouettes</p>
-                        <a href="#" class="category-link">Shop Collection →</a>
+                        <a href="#" class="category-link">Shop Collection <span>→</span></a>
                     </div>
                 </div>
                 <div class="category-card">
@@ -557,13 +691,14 @@
                     <div class="category-overlay">
                         <h3 class="category-title">ACCESSORIES</h3>
                         <p class="category-subtitle">Designed to Disrupt</p>
-                        <a href="#" class="category-link">Shop Collection →</a>
+                        <a href="#" class="category-link">Shop Collection <span>→</span></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Editorial Promo Banners (Vibrant Swim/Lifestyle Grid Style) -->
     <section class="promo-section">
         <div class="container">
             <div class="promo-banner">
@@ -602,6 +737,7 @@
         </div>
     </section>
 
+    <!-- Curated Product Catalog (NEVERMIND Streetwear Glow Lift) -->
     <section class="products-section">
         <div class="container">
             <div class="section-header">
@@ -610,6 +746,7 @@
             </div>
             
             <div class="product-grid">
+                <!-- Product 1 -->
                 <div class="product-card">
                     <div class="product-image-box">
                         <div class="product-tag">Sale</div>
@@ -621,6 +758,7 @@
                         <span class="product-price"><span class="price-old">₱56.00 PHP</span>₱45.00 PHP</span>
                     </div>
                 </div>
+                <!-- Product 2 -->
                 <div class="product-card">
                     <div class="product-image-box">
                         <div class="product-tag">Sale</div>
@@ -632,6 +770,7 @@
                         <span class="product-price"><span class="price-old">₱67.00 PHP</span>₱45.00 PHP</span>
                     </div>
                 </div>
+                <!-- Product 3 -->
                 <div class="product-card">
                     <div class="product-image-box">
                         <div class="product-tag">New</div>
@@ -643,13 +782,14 @@
                         <span class="product-price">₱56.00 PHP</span>
                     </div>
                 </div>
+                <!-- Product 4 -->
                 <div class="product-card">
                     <div class="product-image-box">
                         <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600&auto=format&fit=crop" alt="Luxury Hoodie">
                     </div>
                     <div class="product-card-meta">
                         <span class="product-type">Limited Edition</span>
-                        <span class="product-name">Monster Energy Concept Track Jacket</span>
+                        <span class="product-name">Monster Energy Track Jacket</span>
                         <span class="product-price">₱72.00 PHP</span>
                     </div>
                 </div>
@@ -657,6 +797,7 @@
         </div>
     </section>
 
+    <!-- Editorial Brand Values (Text + Image Split) -->
     <section class="mission-section">
         <div class="mission-block-text">
             <h2 class="mission-title">OUR MISSION & VISION</h2>
@@ -665,11 +806,12 @@
                 <button class="btn btn-dark">Learn More</button>
             </div>
         </div>
-        <div style="background: #e2e2e5;">
-            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1000&auto=format&fit=crop" alt="Brand Editorial Portrait">
+        <div style="background: #e2e2e5; overflow:hidden;">
+            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1000&auto=format&fit=crop" alt="Brand Editorial Portrait" style="transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
         </div>
     </section>
 
+    <!-- Footer System -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -698,7 +840,7 @@
                 <div>
                     <h4 class="footer-col-title">Join The System</h4>
                     <p style="margin-bottom: 15px; line-height: 1.6;">Subscribe to receive early drops and limited private release access.</p>
-                    <input type="email" placeholder="ENTER YOUR EMAIL" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #444; padding: 10px 0; color: #fff; font-size: 0.8rem; letter-spacing: 0.05em; outline: none;">
+                    <input type="email" placeholder="ENTER YOUR EMAIL" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #444; padding: 10px 0; color: #fff; font-size: 0.8rem; letter-spacing: 0.05em; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderBottomColor='#fff'" onblur="this.style.borderBottomColor='#444'">
                 </div>
             </div>
             <div class="footer-bottom">
