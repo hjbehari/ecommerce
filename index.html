@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEVADA // Disruptive Streetwear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- DESIGN SYSTEM & RESET --- */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --bg-accent: #f5f5f7;
+            --text-light: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #888888;
+            --neon-accent: #d4ff00; /* Editorial lime accent from the promo grids */
+            --font-display: 'Syncopate', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- GLOBAL UTILITIES --- */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--text-light);
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--text-light);
+            color: var(--text-dark);
+        }
+
+        .btn-dark {
+            border-color: var(--text-dark);
+            color: var(--text-dark);
+        }
+
+        .btn-dark:hover {
+            background: var(--text-dark);
+            color: var(--text-light);
+        }
+
+        /* --- TICKER ANNOUNCEMENT --- */
+        .announcement-bar {
+            background: var(--bg-primary);
+            border-bottom: 1px solid #222;
+            padding: 10px 0;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-muted);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            letter-spacing: -0.05em;
+            font-weight: 700;
+        }
+
+        .nav-meta {
+            display: flex;
+            gap: 24px;
+            font-size: 0.9rem;
+        }
+
+        /* --- HERO SECTION (GAZU + NEVERMIND VIBE) --- */
+        .hero {
+            position: relative;
+            height: calc(100vh - 115px);
+            min-height: 650px;
+            background: #161616;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Oversized structural background typography from GAZU */
+        .hero-bg-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-display);
+            font-size: 32vw;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.03);
+            white-space: nowrap;
+            user-select: none;
+            z-index: 1;
+        }
+
+        .hero-image-wrapper {
+            position: absolute;
+            right: 10%;
+            bottom: 0;
+            width: 40vw;
+            height: 90%;
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 600px;
+        }
+
+        .hero-tagline {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        /* --- CATEGORIES TRI-GRID --- */
+        .categories-section {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+        }
+
+        .grid-tri {
+            display: grid;
+            grid-template-columns: repeat(3, 100fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background: #222;
+        }
+
+        .category-card img {
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .category-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+        }
+
+        .category-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .category-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .category-link {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- EDITORIAL PROMO GRID (50/40/30 VIBE) --- */
+        .promo-section {
+            padding: 60px 0;
+        }
+
+        .promo-banner {
+            position: relative;
+            height: 480px;
+            background: #1c1c1e;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .promo-banner-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .promo-content {
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .promo-badge {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--neon-accent);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .promo-heading {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .promo-bg-img {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
+        }
+
+        /* --- CURATED PRODUCTS (NEVERMIND STYLING) --- */
+        .products-section {
+            padding: 100px 0;
+            background: var(--bg-primary);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            group: true;
+        }
+
+        .product-image-box {
+            position: relative;
+            height: 420px;
+            background: #181818;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--text-light);
+            color: var(--text-dark);
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 2;
+        }
+
+        .product-card-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .product-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-right: 6px;
+        }
+
+        /* --- SPLIT BRAND MISSION (GAZU LIGHT ARCHITECTURE) --- */
+        .mission-section {
+            background: var(--bg-accent);
+            color: var(--text-dark);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        .mission-block-text {
+            padding: 120px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mission-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .mission-desc {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 40px;
+            max-width: 480px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--bg-primary);
+            padding: 80px 0 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-col-title {
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-links display: flex;
+        .footer-links flex-direction: column;
+        .footer-links gap: 12px;
+
+        .footer-links a {
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+        }
+
+        /* --- RESPONSIVE FIXES --- */
+        @media(max-width: 1024px) {
+            .grid-tri, .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .promo-banner-split, .mission-section { grid-template-columns: 1fr; }
+            .hero-image-wrapper { display: none; }
+            .hero-content { max-width: 100%; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media(max-width: 600px) {
+            .grid-tri, .product-grid, .footer-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 20px; }
+            .hero-title { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="announcement-bar">
+        FREE SHIPPING ON GLOBAL ORDERS OVER $150 • DROP 04 LIVE NOW
+    </div>
+
+    <header>
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><a href="#">Men</a></li>
+                <li><a href="#">Women</a></li>
+                <li><a href="#">Objects</a></li>
+            </ul>
+            
+            <a href="#" class="logo">NEVADA</a>
+            
+            <div class="nav-meta">
+                <a href="#">Search</a>
+                <a href="#">Account</a>
+                <a href="#">Cart (0)</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg-text">NVD</div>
+        <div class="hero-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop" alt="Hero Model Editorial">
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-tagline">New Collection 2026</p>
+                <h1 class="hero-title">STYLING THAT MOVES WITH YOU.</h1>
+                <button class="btn">Explore Drops</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section">
+        <div class="container">
+            <div class="grid-tri">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Men's Essentials">
+                    <div class="category-overlay">
+                        <h3 class="category-title">MENS</h3>
+                        <p class="category-subtitle">Elevated Everyday Essentials</p>
+                        <a href="#" class="category-link">Shop Collection →</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop" alt="Women's Style">
+                    <div class="category-overlay">
+                        <h3 class="category-title">WOMENS</h3>
+                        <p class="category-subtitle">Effortless Shapes & Silhouettes</p>
+                        <a href="#" class="category-link">Shop Collection →</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Accessories">
+                    <div class="category-overlay">
+                        <h3 class="category-title">ACCESSORIES</h3>
+                        <p class="category-subtitle">Designed to Disrupt</p>
+                        <a href="#" class="category-link">Shop Collection →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-section">
+        <div class="container">
+            <div class="promo-banner">
+                <div class="promo-content">
+                    <div class="promo-badge">50% OFF</div>
+                    <h2 class="promo-heading">HOTEL PARADISO COLLECTION</h2>
+                    <button class="btn">Shop The Sale</button>
+                </div>
+                <div class="promo-bg-img">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200&auto=format&fit=crop" alt="Summer Promo Banner">
+                </div>
+            </div>
+            
+            <div class="promo-banner-split">
+                <div class="promo-banner" style="height: 380px; padding: 0 40px;">
+                    <div class="promo-content">
+                        <div class="promo-badge" style="font-size: 2.5rem; color: var(--text-light);">40% OFF</div>
+                        <h2 class="promo-heading" style="font-size: 1.4rem;">BODYCTRL SERIES</h2>
+                        <button class="btn" style="padding: 10px 24px; font-size: 0.75rem;">Shop Now</button>
+                    </div>
+                    <div class="promo-bg-img" style="width: 50%;">
+                        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=600&auto=format&fit=crop" alt="Promo image">
+                    </div>
+                </div>
+                <div class="promo-banner" style="height: 380px; padding: 0 40px; background: #222;">
+                    <div class="promo-content">
+                        <div class="promo-badge" style="font-size: 2.5rem; color: var(--neon-accent);">30% OFF</div>
+                        <h2 class="promo-heading" style="font-size: 1.4rem;">FRESH PASTELS</h2>
+                        <button class="btn" style="padding: 10px 24px; font-size: 0.75rem;">Shop Now</button>
+                    </div>
+                    <div class="promo-bg-img" style="width: 50%;">
+                        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=600&auto=format&fit=crop" alt="Promo image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Designed to Disrupt</h2>
+                <a href="#" style="text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em; border-bottom: 1px solid;">View All Drops</a>
+            </div>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image-box">
+                        <div class="product-tag">Sale</div>
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop" alt="Unisex Hoodie">
+                    </div>
+                    <div class="product-card-meta">
+                        <span class="product-type">Unisex Hoodie</span>
+                        <span class="product-name">Los Angeles Tech Hoodie</span>
+                        <span class="product-price"><span class="price-old">₱56.00 PHP</span>₱45.00 PHP</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image-box">
+                        <div class="product-tag">Sale</div>
+                        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop" alt="Unisex Knit">
+                    </div>
+                    <div class="product-card-meta">
+                        <span class="product-type">Unisex Sweater</span>
+                        <span class="product-name">Smile Graphics Heavy Knit</span>
+                        <span class="product-price"><span class="price-old">₱67.00 PHP</span>₱45.00 PHP</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image-box">
+                        <div class="product-tag">New</div>
+                        <img src="https://images.unsplash.com/photo-1578587018452-892bacefd3f2?q=80&w=600&auto=format&fit=crop" alt="Streetwear Hoodie">
+                    </div>
+                    <div class="product-card-meta">
+                        <span class="product-type">Unisex Hoodie</span>
+                        <span class="product-name">Amity Oversized Pullover</span>
+                        <span class="product-price">₱56.00 PHP</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image-box">
+                        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600&auto=format&fit=crop" alt="Luxury Hoodie">
+                    </div>
+                    <div class="product-card-meta">
+                        <span class="product-type">Limited Edition</span>
+                        <span class="product-name">Monster Energy Concept Track Jacket</span>
+                        <span class="product-price">₱72.00 PHP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-section">
+        <div class="mission-block-text">
+            <h2 class="mission-title">OUR MISSION & VISION</h2>
+            <p class="mission-desc">Luxury staples configured for the modern disruptor. Precision-tailored pieces designed to break regular conventions and redefine physical presence. This isn't just clothing—it's an artistic statement.</p>
+            <div>
+                <button class="btn btn-dark">Learn More</button>
+            </div>
+        </div>
+        <div style="background: #e2e2e5;">
+            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1000&auto=format&fit=crop" alt="Brand Editorial Portrait">
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">NEVADA</div>
+                    <p style="max-width: 280px; line-height: 1.6;">Precision engineered wardrobe systems built to defy current industry conventions.</p>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">All Drops</a></li>
+                        <li><a href="#">Campaigns</a></li>
+                        <li><a href="#">Lookbooks</a></li>
+                        <li><a href="#">Sizing Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Assistance</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Track Orders</a></li>
+                        <li><a href="#">Easy Returns</a></li>
+                        <li><a href="#">Secure Checkout</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Join The System</h4>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">Subscribe to receive early drops and limited private release access.</p>
+                    <input type="email" placeholder="ENTER YOUR EMAIL" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #444; padding: 10px 0; color: #fff; font-size: 0.8rem; letter-spacing: 0.05em; outline: none;">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NEVADA. ALL RIGHTS RESERVED.</p>
+                <p>DESIGNED TO DISRUPT.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
